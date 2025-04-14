@@ -34,6 +34,14 @@ internal class Program
 
   private static void Main()
   {
+    string twoPlayer = EnableTwoPlayer();
+    if (twoPlayer == "y")
+    {
+      TwoPlayer();
+      return;
+    }
+
+
     LoadGame();
     Console.WriteLine("Let's play Rock Paper Scissors! 🤘");
     string userMove = ChooseMove();
@@ -63,6 +71,19 @@ internal class Program
     {
       Main();
     }
+  }
+
+  private static string EnableTwoPlayer()
+  {
+    Console.WriteLine("Enable Two Player Mode?");
+    string userInput = Console.ReadLine();
+    if (userInput != "y" && userInput != "n")
+    {
+      Console.Clear();
+      Console.WriteLine("Hit y or n.");
+      return EnableTwoPlayer();
+    }
+    return $"{userInput}";
   }
 
   private static bool AskToPlayAgain()
@@ -144,6 +165,11 @@ internal class Program
       return "scissors";
     }
     return "an error occured/something broke";
+  }
+  private static void TwoPlayer()
+  {
+    Console.WriteLine("Let's play Rock Paper Scissors TWO PLAYER 🤘");
+    
   }
 }
 
