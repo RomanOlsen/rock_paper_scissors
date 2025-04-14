@@ -12,3 +12,4 @@
 /Users/romanolsen/source/CodeworksFolder/week10/rock_paper_scissors/obj/Debug/net9.0/rock_paper_scissors.pdb
 /Users/romanolsen/source/CodeworksFolder/week10/rock_paper_scissors/obj/Debug/net9.0/rock_paper_scissors.genruntimeconfig.cache
 /Users/romanolsen/source/CodeworksFolder/week10/rock_paper_scissors/obj/Debug/net9.0/ref/rock_paper_scissors.dll
+/Users/romanolsen/source/CodeworksFolder/week10/rock_paper_scissors/obj/Debug/net9.0/rock_paper_scissors.sourcelink.json
