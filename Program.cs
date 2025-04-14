@@ -2,6 +2,11 @@
 
 internal class Program
 {
+
+  // static int userWins = 0;
+  // static int computerWins = 0;
+
+
   private static void Main()
   {
     Console.WriteLine("Let's play Rock Paper Scissors! 🤘");
@@ -9,8 +14,40 @@ internal class Program
     string computerMove = PickComputerMove();
     Console.WriteLine($"You chose {userMove}");
     Console.WriteLine($"Your opponent chose {computerMove}");
+    string winner = DecideWinner(userMove, computerMove);
+    if (winner == "Tie")
+    {
+      Console.WriteLine("It's a tie!");
+    }
+    else
+    {
+      Console.WriteLine($"And the winner is {winner}!");
+    }
 
   }
+
+  static string DecideWinner(string userMove, string computerMove)
+  {
+    if (userMove == computerMove)
+    {
+      return "Tie";
+    }
+    // ANCHOR times when user wins
+    if (userMove == "rock" && computerMove == "scissors")
+    {
+      return "you";
+    }
+    if (userMove == "paper" && computerMove == "rock")
+    {
+      return "you";
+    }
+    if (userMove == "scissors" && computerMove == "paper")
+    {
+      return "you";
+    }
+    return "the computer";
+  }
+
   static string ChooseMove()
   {
     Console.WriteLine("Choose your fighter");
@@ -27,8 +64,6 @@ internal class Program
       return ChooseMove(); // thanks to jeremy for adding the return for me
     }
     string answer = FilterMove(userInput);
-
-
     return $"{answer}";
   }
 
@@ -36,22 +71,8 @@ internal class Program
   {
     int computerPick = new Random().Next(1, 4);
     string answer = FilterMove($"{computerPick}");
-    // if (computerPick == 1)
-    // {
-    //   return "rock";
-    // }
-    // if (computerPick == 2)
-    // {
-    //   return "paper";
-    // }
-    // if (computerPick == 3)
-    // {
-    //   return "scissors";
-    // }
     return $"{answer}";
-
   }
-
   static string FilterMove(string option)
   {
     if (option == "1" || option == "r")
