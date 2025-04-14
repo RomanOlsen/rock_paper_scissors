@@ -2,16 +2,14 @@
 
 internal class Program
 {
-
-  // static int userWins = 0;
-  // static int computerWins = 0;
-
-
+  static int userWins = 0;
+  static int computerWins = 0;
   private static void Main()
   {
     Console.WriteLine("Let's play Rock Paper Scissors! 🤘");
     string userMove = ChooseMove();
     string computerMove = PickComputerMove();
+    Console.Clear();
     Console.WriteLine($"You chose {userMove}");
     Console.WriteLine($"Your opponent chose {computerMove}");
     string winner = DecideWinner(userMove, computerMove);
@@ -19,11 +17,39 @@ internal class Program
     {
       Console.WriteLine("It's a tie!");
     }
-    else
+    else if (winner == "you")
     {
+      userWins++;
       Console.WriteLine($"And the winner is {winner}!");
     }
+    else
+    {
+      computerWins++;
+      Console.WriteLine($"And the winner is {winner}!");
+    }
+    Console.WriteLine($"Score: {userWins}-{computerWins}");
+    bool playAgain = AskToPlayAgain();
+    if (playAgain)
+    {
+      Main();
+    }
+  }
 
+  private static bool AskToPlayAgain()
+  {
+    Console.WriteLine("Play again? (y/n)");
+    string userInput = Console.ReadLine();
+    if (userInput != "y" && userInput != "n")
+    {
+      Console.Clear();
+      Console.WriteLine("Type y or n.");
+      return AskToPlayAgain();
+    }
+    if (userInput == "y")
+    {
+      return true;
+    }
+    return false;
   }
 
   static string DecideWinner(string userMove, string computerMove)
