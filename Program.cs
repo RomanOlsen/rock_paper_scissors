@@ -1,11 +1,40 @@
-﻿using System.Threading.Tasks;
+﻿using System.Text.Json;
+using System.Threading.Tasks;
 
 internal class Program
 {
+
   static int userWins = 0;
   static int computerWins = 0;
+  static void SaveGame()
+  {
+
+    SaveData save = new(userWins, computerWins);
+    string saveData = JsonSerializer.Serialize(save);
+    File.WriteAllText("saveGame.json", saveData);
+
+  }
+
+  static void LoadGame()
+  {
+
+    if (!File.Exists("saveGame.json")) return;
+    string jsonString = File.ReadAllText("saveGame.json");
+
+    SaveData data = JsonSerializer.Deserialize<SaveData>(jsonString);
+    if (data != null)
+    {
+      userWins = data.UserWins;
+      computerWins = data.ComputerWins;
+    }
+
+  }
+
+
+
   private static void Main()
   {
+    LoadGame();
     Console.WriteLine("Let's play Rock Paper Scissors! 🤘");
     string userMove = ChooseMove();
     string computerMove = PickComputerMove();
@@ -28,6 +57,7 @@ internal class Program
       Console.WriteLine($"And the winner is {winner}!");
     }
     Console.WriteLine($"Score: {userWins}-{computerWins}");
+    SaveGame();
     bool playAgain = AskToPlayAgain();
     if (playAgain)
     {
@@ -83,11 +113,11 @@ internal class Program
 
     string userInput = Console.ReadLine();
 
-    if (userInput != "r" && userInput != "p" && userInput != "s")
+    if (userInput != "r" && userInput != "p" && userInput != "s" && userInput != "rock" && userInput != "paper" && userInput != "scissors")
     {
       Console.Clear();
       Console.WriteLine("Please type r, p, or s to choose.");
-      return ChooseMove(); // thanks to jeremy for adding the return for me
+      return ChooseMove();
     }
     string answer = FilterMove(userInput);
     return $"{answer}";
@@ -101,18 +131,32 @@ internal class Program
   }
   static string FilterMove(string option)
   {
-    if (option == "1" || option == "r")
+    if (option == "1" || option == "r" || option == "rock")
     {
       return "rock";
     }
-    if (option == "2" || option == "p")
+    if (option == "2" || option == "p" || option == "paper")
     {
       return "paper";
     }
-    if (option == "3" || option == "s")
+    if (option == "3" || option == "s" || option == "scissors")
     {
       return "scissors";
     }
     return "an error occured/something broke";
+  }
+}
+
+internal class SaveData
+{
+  public int UserWins { get; set; }
+  public int ComputerWins { get; set; }
+
+  public SaveData(int userWins, int computerWins)
+  {
+
+    UserWins = userWins;
+    ComputerWins = computerWins;
+
   }
 }
