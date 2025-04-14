@@ -6,6 +6,9 @@ internal class Program
 
   static int userWins = 0;
   static int computerWins = 0;
+  static int player1Wins = 0;
+  static int player2Wins = 0;
+
   static void SaveGame()
   {
 
@@ -43,6 +46,7 @@ internal class Program
 
 
     LoadGame();
+    Console.Clear();
     Console.WriteLine("Let's play Rock Paper Scissors! 🤘");
     string userMove = ChooseMove();
     string computerMove = PickComputerMove();
@@ -75,7 +79,7 @@ internal class Program
 
   private static string EnableTwoPlayer()
   {
-    Console.WriteLine("Enable Two Player Mode?");
+    Console.WriteLine("Enable Two Player Mode? (y/n)");
     string userInput = Console.ReadLine();
     if (userInput != "y" && userInput != "n")
     {
@@ -103,7 +107,7 @@ internal class Program
     return false;
   }
 
-  static string DecideWinner(string userMove, string computerMove)
+  static string DecideWinner(string userMove, string computerMove) // NOTE computer move is player 2 on Two player mode
   {
     if (userMove == computerMove)
     {
@@ -168,8 +172,43 @@ internal class Program
   }
   private static void TwoPlayer()
   {
+    Console.Clear();
     Console.WriteLine("Let's play Rock Paper Scissors TWO PLAYER 🤘");
-    
+
+    Console.WriteLine("PLAYER 1");
+    string player1Move = ChooseMove();
+    Console.Clear();
+    Console.WriteLine("PLAYER 2");
+    string player2Move = ChooseMove();
+    Console.Clear();
+
+    Console.WriteLine($"Player 1, you chose {player1Move}.");
+    Console.WriteLine($"Player 2! You chose {player2Move}.");
+
+    string winner = DecideWinner(player1Move, player2Move);
+    if (winner == "Tie")
+    {
+      Console.WriteLine("It's a tie!");
+    }
+    else if (winner == "you") // you meaning player 1
+    {
+      player1Wins++;
+      Console.WriteLine($"And the winner is PLAYER 1!");
+    }
+    else
+    {
+      player2Wins++;
+      Console.WriteLine($"And the winner is PLAYER 2!");
+    }
+
+    Console.WriteLine($"Score: {player1Wins}-{player2Wins}");
+
+    bool playAgain = AskToPlayAgain();
+    if (playAgain)
+    {
+      TwoPlayer();
+    }
+
   }
 }
 
